@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+  <property name="uuid_type" value="uuid" dbms="postgresql"/>
+  <property name="uuid_type" value="uuid" dbms="h2"/>
+
+  <property name="uuid_function" value="gen_random_uuid()" dbms="postgresql"/>
+  <property name="uuid_function" value="uuid()" dbms="h2"/>
+
+  <!-- Проверяем есть ли таблица employs -->
+  <changeSet id="drop-table-employs" author="dg">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="employs"/>
+    </preConditions>
+    <dropTable cascadeConstraints="true" tableName="employs"/>
+  </changeSet>
+  <!-- create table employs -->
+  <changeSet id="create-table-employs" author="dg">
+    <createTable tableName="employs">
+      <column autoIncrement="true" name="id" type="bigserial">
+        <constraints primaryKey="true" nullable="false" primaryKeyName="pk_employ_id"/>
+      </column>
+      <column name="created_at" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP(3)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="updated_at" type="timestamp" defaultValueDate="CURRENT_TIMESTAMP(3)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="active" type="boolean" defaultValue="true">
+        <constraints nullable="false"/>
+      </column>
+      <column name="public_id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
+        <constraints nullable="false" unique="true" uniqueConstraintName="idx_employ_public_id_unq"/>
+      </column>
+      <column name="first_name" type="varchar(200)">
+        <constraints nullable="false" />
+      </column>
+      <column name="last_name" type="varchar(200)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+</databaseChangeLog>
