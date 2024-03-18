@@ -17,4 +17,10 @@
       CREATE SCHEMA IF NOT EXISTS employs_schema;
     </sql>
   </changeSet>
+  <!--create sequence -->
+  <changeSet id="create-sequence" author="dg" context="local">
+    <sql>
+      create sequence sequence_id_auto_gen increment 100;
+    </sql>
+  </changeSet>
 </databaseChangeLog>
