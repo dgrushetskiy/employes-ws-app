@@ -1,5 +1,6 @@
 package ru.gothmog.ws.employes.core.service.empl.impl;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class EmployServiceImpl implements EmployService {
     private final EmployRepository employRepository;
 
     @Override
-    public EmployDto create(EmployDto dto) {
+    public EmployDto create(final @NonNull EmployDto dto) {
         return null;
     }
 

@@ -5,13 +5,19 @@ validation:
 
 app:
   cors:
-    allowedOrigins: https://gothmog.ru, it-gothmog.ru, https://ingress.gothmog.ru, ingress.it-gothmog.ru
+    allowedOrigins: https://gothmog.ru, it-gothmog.ru, https://ingress.gothmog.ru, ingress.it-gothmog.ru, http://127.0.0.1:${SERVER_PORT:8080}
     allowCredentials: true
+  openapi:
+    local-url: http://127.0.0.1:${SERVER_PORT:8080}
+    develop-url: https://ingress.dev-gothmog.ru
+    ift-url: https://ingress.ift-gothmog.ru
+    prod-url: https://ingress.gothmog.ru
 
 logging:
   level:
     root: INFO
     ru: info
+    web: DEBUG
     org:
       hibernate:
         SQL: info
@@ -37,7 +43,7 @@ management:
         enabled: true
 
 server:
-  port: ${SERVER_PORT:5010}
+  port: ${SERVER_PORT:8080}
   compression:
     enabled: true
 
